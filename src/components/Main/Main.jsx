@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import './Main.css'
 import { assets } from "../../assets/assets";
 import { Context } from "../../context/Context";
+import { BiUser, BiMicrophone, BiImage, BiSend } from "react-icons/bi";
 
 const Main = () => {
     const { onSent, recentPrompt, showResult, loading, resultData, setInput, input } = useContext(Context);
@@ -14,7 +15,7 @@ const Main = () => {
                     <h1>Gemini AI Assistant</h1>
                 </div>
                 <div className="nav-user">
-                    <img src={assets.user_icon} alt="User" className="user-avatar" />
+                    <BiUser size={24} className="user-avatar" />
                 </div>
             </div>
 
@@ -55,7 +56,7 @@ const Main = () => {
                 ) : (
                     <div className="chat-container">
                         <div className="chat-message user-message">
-                            <img src={assets.user_icon} alt="" className="message-avatar" />
+                            <BiUser size={24} className="message-avatar" />
                             <div className="message-content">
                                 <p className="message-text">{recentPrompt}</p>
                             </div>
@@ -98,7 +99,7 @@ const Main = () => {
                                     // TODO: Implement image upload
                                 }}
                             >
-                                <img src={assets.gallery_icon} alt="Upload" />
+                                <BiImage size={20} />
                             </button>
                             <button 
                                 className="action-btn" 
@@ -107,7 +108,7 @@ const Main = () => {
                                     // TODO: Implement voice input
                                 }}
                             >
-                                <img src={assets.mic_icon} alt="Voice" />
+                                <BiMicrophone size={20} />
                             </button>
                             {input && (
                                 <button 
@@ -116,7 +117,7 @@ const Main = () => {
                                     title="Send message"
                                     aria-label="Send message"
                                 >
-                                    <img src={assets.send_icon} alt="Send" />
+                                    <BiSend size={20} />
                                 </button>
                             )}
                         </div>
