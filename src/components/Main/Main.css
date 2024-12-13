@@ -1,203 +1,241 @@
 .main {
     flex: 1;
     min-height: 100vh;
-    padding-bottom: 15vh;
-    position: relative;
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    color: #fff;
+    padding: 2rem;
 }
 
 .main .nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-size: 22px;
-    padding: 20px;
-    color: #585858;
+    padding: 1rem 2rem;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border-radius: 1rem;
+    margin-bottom: 2rem;
 }
 
 .main .nav img {
-    width: 40px;
+    width: 45px;
     border-radius: 50%;
+    border: 2px solid #4a90e2;
+    padding: 2px;
+    transition: transform 0.3s ease;
+    filter: brightness(1.2);
+}
+
+.main .nav img:hover {
+    transform: scale(1.1);
 }
 
 .main-container {
-    max-width: 900px;
-    margin: auto;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-.main .greet {
-    margin: 5px 0px;
-    font-size: 56px;
-    color: #c4c7c5;
-    font-weight: 500;
-    padding: 20px;
+.welcome-section {
+    text-align: center;
+    margin: 3rem 0;
+    animation: fadeIn 1s ease;
 }
 
-.main .greet span {
-    background: -webkit-linear-gradient(16deg, #4b90ff, #ff5546);
+.welcome-section h2 {
+    font-size: 2.5vw;
+    background: linear-gradient(45deg, #4a90e2, #63f5aa);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    margin-bottom: 1rem;
 }
 
-.main .cards {
+.suggestion-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 15px;
-    padding: 20px;
-    margin: 5px 0px;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    padding: -2vw 0;
 }
 
-.main .card {
-    height: 200px;
-    padding: 15px;
-    background-color: #f0f4f9;
-    border-radius: 10px;
-    position: relative;
+.suggestion-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 1rem;
+    padding: 2rem;
+    transition: all 0.3s ease;
     cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.main .card img {
-    width: 35px;
-    padding: 5px;
-    position: absolute;
-    background-color: white;
-    border-radius: 20px;
-    bottom: 10px;
-    right: 10px;
+.suggestion-card:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
-.main .card p {
-    color: #585858;
-    font-size: 17px;
+.card-icon {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 1rem;
+    filter: brightness(1.2);
 }
 
-.main .card:hover {
-    background-color: #dfe4ea;
+.chat-container {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 1rem;
+    padding: 2rem;
+    margin: 2rem 0;
 }
 
-.main-bottom {
-    position: absolute;
-    bottom: 0.5px;
-    width: 100%;
-    max-width: 900px;
-    padding: 0px 20px;
-    margin-top: 25px;
+.chat-message {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    animation: slideIn 0.5s ease;
 }
 
-.search-box {
+.message-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    filter: brightness(1.2);
+}
+
+.message-content {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 1rem;
+    border-radius: 1rem;
+    flex: 1;
+}
+
+.input-section {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 800px;
+    z-index: 100;
+    background: rgba(26, 26, 46, 0.95);
+    /* padding: 1rem; */
+    border-radius: 2rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    margin-top: 1rem;
+}
+
+.input-container {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 1.5rem;
+    padding: 0.8rem 1.5rem;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-    background-color: #f0f4f9;
-    padding: 10px 20px;
-    border-radius: 50px;
+    gap: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
 }
 
-.search-box img {
-    width: 24px;
-    cursor: pointer;
+.input-container:focus-within {
+    border-color: rgba(74, 144, 226, 0.5);
+    box-shadow: 0 0 10px rgba(74, 144, 226, 0.2);
 }
 
-.search-box input {
+.main-input {
     flex: 1;
     background: transparent;
     border: none;
+    color: #fff;
+    font-size: 1rem;
+    padding: 0.5rem;
     outline: none;
-    padding: 8px;
-    font-size: center;
 }
 
-.search-box div {
+.main-input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.input-actions {
     display: flex;
-    align-items: center;
-    gap: 15px;
+    gap: 1rem;
 }
 
-.main .bottom-info {
-    font-size: 13px;
-    margin-top: 15px;
-    margin-bottom: 15px;
-    text-align: center;
-    font-weight: 300;
-}
-
-.result {
-    padding: 0px 5%;
-    max-height: 70vh;
-    overflow-y: scroll;
-}
-
-.result::-webkit-scrollbar {
-    display: none;
-}
-
-.result-title {
-    margin: 40px 0px;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-.result img {
-    width: 40px;
+.action-btn, .send-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
     border-radius: 50%;
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.result-data {
-    display: flex;
-    align-items: start;
-    gap: 20px;
+.action-btn img, .send-btn img {
+    width: 20px;
+    height: 20px;
+    filter: brightness(1.2);
+}
+
+.action-btn:hover, .send-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
 }
 
 .loader {
-    width: 100%;
     display: flex;
-    flex-direction: column;
-    gap: 10px;
+    gap: 0.5rem;
+    padding: 1rem;
 }
 
 .loader hr {
-    border-radius: 4px;
+    flex: 1;
+    height: 3px;
+    background: linear-gradient(90deg, #4a90e2, #63f5aa);
     border: none;
-    background-color: #f6f7f8;
-    background: linear-gradient(to right, #9ed7ff, #ffffff, #9ed7ff);
-    background-size: 800px 50px;
-    height: 20px;
-    animation: loader 3s infinite linear;
+    border-radius: 3px;
+    animation: pulse 1.5s ease infinite;
 }
 
-@keyframes loader {
-    0% {
-        background-position: -800px 0px;
-    }
-
-    100% {
-        background-position: 800px 0px;
-    }
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
-.result-data p {
-    font-size: 17px;
-    font-weight: 300;
-    line-height: 1.8;
+@keyframes slideIn {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
 }
 
-@media (max-width:600px) {
-    .main-bottom input {
-        flex: none;
-        width: 150px;
+@keyframes pulse {
+    0% { opacity: 0.3; }
+    50% { opacity: 1; }
+    100% { opacity: 0.3; }
+}
+
+@media (max-width: 600px) {
+    .main {
+        padding: 1rem;
+    }
+    
+    .welcome-section h2 {
+        font-size: 2rem;
+    }
+    
+    .suggestion-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .input-section {
+        width: 95%;
+        bottom: 1rem;
+        padding: 0.75rem;
     }
 
-
-    .main-bottom img {
-        width: 20px;
+    .input-container {
+        padding: 0.6rem 1rem;
     }
 
-    .search-box {
-        padding: 5px 10px;
-    }
-
-    .search-box div {
-        gap: 5px;
+    .action-btn img, .send-btn img {
+        width: 16px;
+        height: 16px;
     }
 }

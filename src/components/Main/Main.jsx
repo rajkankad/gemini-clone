@@ -1,71 +1,139 @@
-import React, { useCallback, useContext } from "react";
-import'./Main.css'
+import React, { useContext } from "react";
+import './Main.css'
 import { assets } from "../../assets/assets";
 import { Context } from "../../context/Context";
 
-const Main =() =>{
+const Main = () => {
+    const { onSent, recentPrompt, showResult, loading, resultData, setInput, input } = useContext(Context);
 
-const {onSent,recentPrompt,showResult,loading,resultData,setInput,input} = useContext(Context)
-
-    return(
+    return (
         <div className="main">
             <div className="nav">
-                <p>Gemini</p>
-                <img src={assets.user_icon} alt="" />
+                <div className="nav-logo">
+                    <img src={assets.gemini_icon} alt="Gemini Logo" className="nav-icon" />
+                    <h1>Gemini AI Assistant</h1>
+                </div>
+                <div className="nav-user">
+                    <img src={assets.user_icon} alt="User" className="user-avatar" />
+                </div>
             </div>
+
             <div className="main-container">
+                {!showResult ? (
+                    <>
+                        <div className="welcome-section">
+                            <h2>Welcome to Gemini AI</h2>
+                            <p className="welcome-text">Your intelligent assistant for creative solutions</p>
+                        </div>
 
-                {!showResult ? 
-                <>
-                    <div className="greet">
-                    <p><span>Hello,Dev</span></p>
-                    <p>How can I help you today</p>
-                </div>
-                <div className="cards">
-                    <div className="card">
-                        <p>Suggest beautiful places to see on an upcoming road trip</p>
-                        <img src={assets.compass_icon} alt="" />
-                    </div>
-                    <div className="card">
-                        <p>Briefly summarize this concept: urban planning</p>
-                        <img src={assets.bulb_icon} alt="" />
-                    </div>
-                    <div className="card">
-                        <p>Brainstorm team bonding activities for our work retreat</p>
-                        <img src={assets.message_icon} alt="" />
-                    </div>
-                    <div className="card">
-                        <p>Improve the readability of the following code</p>
-                        <img src={assets.code_icon} alt="" />
-                    </div>
-                </div>
-                </>:
-                    <div className='result'>
-                        <div className="result-title">
-                            <img src={assets.user_icon} alt="" />
-                            <p>{recentPrompt}</p>
-                        </div>
-                        <div className="result-data">
-                            <img src={assets.gemini_icon} alt="" />
-                            {loading ? <div className='loader'><hr /><hr /><hr /></div>:<p dangerouslySetInnerHTML={{__html:resultData}}></p>}  
-                        </div>
-                    </div>
-                }
+                        <div className="suggestion-grid">
+                            <div className="suggestion-card" onClick={() => setInput("Suggest beautiful places to see on an upcoming road trip")}>
+                                <img src={assets.compass_icon} alt="" className="card-icon" />
+                                <h3>Travel Planning</h3>
+                                <p>Discover amazing destinations for your next adventure</p>
+                            </div>
 
-                <div className="main-bottom">
-                    <div className="search-box">
-                        <input onChange={(e)=>setInput(e.target.value)} value={input} type="text" placeholder='Enter a prompt here' />
-                        <div>
-                            <img src={assets.gallery_icon} alt="" />
-                            <img src={assets.mic_icon} alt="" />
-                           {input?<img onClick={()=>onSent()} src={assets.send_icon} alt="" />:null}
+                            <div className="suggestion-card" onClick={() => setInput("Explain urban planning concepts")}>
+                                <img src={assets.bulb_icon} alt="" className="card-icon" />
+                                <h3>Learn Concepts</h3>
+                                <p>Get clear explanations on complex topics</p>
+                            </div>
+
+                            <div className="suggestion-card" onClick={() => setInput("Suggest team building activities")}>
+                                <img src={assets.message_icon} alt="" className="card-icon" />
+                                <h3>Team Building</h3>
+                                <p>Ideas for engaging group activities</p>
+                            </div>
+
+                            <div className="suggestion-card" onClick={() => setInput("Help improve code readability")}>
+                                <img src={assets.code_icon} alt="" className="card-icon" />
+                                <h3>Code Review</h3>
+                                <p>Enhance your code quality</p>
+                            </div>
+                        </div>
+                    </>
+                ) : (
+                    <div className="chat-container">
+                        <div className="chat-message user-message">
+                            <img src={assets.user_icon} alt="" className="message-avatar" />
+                            <div className="message-content">
+                                <p className="message-text">{recentPrompt}</p>
+                            </div>
+                        </div>
+
+                        <div className="chat-message ai-message">
+                            <img src={assets.gemini_icon} alt="" className="message-avatar" />
+                            <div className="message-content">
+                                {loading ? (
+                                    <div className="loader">
+                                        <hr /><hr /><hr />
+                                    </div>
+                                ) : (
+                                    <p className="message-text" dangerouslySetInnerHTML={{__html: resultData}}></p>
+                                )}
+                            </div>
                         </div>
                     </div>
-                    <p className="bottom-info">Gemini may display inaccurate info, including about people, so double-check its responses. Your privacy and Gemini Apps</p>
+                )}
+
+                <div className="input-section">
+                    <div className="input-container">
+                        <input 
+                            type="text"
+                            value={input}
+                            onChange={(e) => setInput(e.target.value)}
+                            placeholder="Ask me anything..."
+                            className="main-input"
+                            onKeyPress={(e) => {
+                                if (e.key === 'Enter' && input) {
+                                    onSent();
+                                }
+                            }}
+                        />
+                        <div className="input-actions">
+                            <button 
+                                className="action-btn" 
+                                title="Upload image"
+                                onClick={() => {
+                                    // TODO: Implement image upload
+                                }}
+                            >
+                                <img src={assets.gallery_icon} alt="Upload" />
+                            </button>
+                            <button 
+                                className="action-btn" 
+                                title="Voice input"
+                                onClick={() => {
+                                    // TODO: Implement voice input
+                                }}
+                            >
+                                <img src={assets.mic_icon} alt="Voice" />
+                            </button>
+                            {input && (
+                                <button 
+                                    className="send-btn" 
+                                    onClick={onSent} 
+                                    title="Send message"
+                                    aria-label="Send message"
+                                >
+                                    <img src={assets.send_icon} alt="Send" />
+                                </button>
+                            )}
+                        </div>
+                    </div>
+                    <p className="disclaimer">
+                        Gemini may display inaccurate info, including about people, so double-check its responses.{' '}
+                        <a href="#" onClick={(e) => {
+                            e.preventDefault();
+                            // TODO: Add privacy policy link/modal
+                        }}>
+                            Your privacy and Gemini Apps
+                        </a>
+                    </p>
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
-export default Main
+export default Main;

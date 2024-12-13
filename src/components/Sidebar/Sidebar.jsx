@@ -1,62 +1,96 @@
-import React,{useContext, useState} from "react";
+import React, { useContext, useState, useEffect } from "react";
 import "./Sidebar.css";
 import { assets } from "../../assets/assets"
 import { Context } from "../../context/Context";
 
 const Sidebar = () => {
-    
-    const [extended,setExtended] = useState(false)
-    const { onSent,prevPrompts,setRecentPrompt,newChat} = useContext(Context)
+    const [extended, setExtended] = useState(false)
+    const [animation, setAnimation] = useState(false)
+    const { onSent, prevPrompts, setRecentPrompt, newChat } = useContext(Context)
 
     const loadPrompt = async (prompt) => {
-      setRecentPrompt(prompt)
-      await onSent(prompt)
+        setRecentPrompt(prompt)
+        await onSent(prompt)
     }
 
-  return (
-    
-      <div className="sidebar">
-        <div className="top">
-          <img onClick = {() =>setExtended(prev => !prev)} className="menu" src={assets.menu_icon} alt="" />
-          <div onClick={()=>newChat} className="new-chat">
-            <img src={assets.plus_icon} alt="" />
-            {extended ? <p>New chat</p> : null}
-          </div>
-          
-          {extended
-         ? <div className="recent">
-            <p className="recent-title">Recent</p>
-            {prevPrompts.map((item,index)=>{
-              return(
-                <div onClick={()=>loadPrompt(item)} className="recent-entry">
-              <img src={assets.message_icon} alt="" />
-              <p>{item.slice(0,18)} ...</p>
+    useEffect(() => {
+        setAnimation(true)
+        return () => setAnimation(false)
+    }, [extended])
+
+    return (
+        <div className={`sidebar ${extended ? 'extended' : ''}`}>
+            <div className="top">
+                <div className="menu-container">
+                    <img 
+                        onClick={() => setExtended(prev => !prev)} 
+                        className={`menu ${animation ? 'rotate' : ''}`} 
+                        src={assets.menu_icon} 
+                        alt="Menu" 
+                    />
+                </div>
+                <div 
+                    onClick={newChat} 
+                    className={`new-chat-btn ${extended ? 'extended' : ''}`}
+                >
+                    <div className="icon-wrapper">
+                        <img src={assets.plus_icon} alt="New Chat" />
+                    </div>
+                    <span className={`btn-text ${extended ? 'fade-in' : ''}`}>
+                        New Chat
+                    </span>
+                </div>
+
+                {extended && (
+                    <div className="recent-container">
+                        <h3 className="recent-title">Recent Conversations</h3>
+                        <div className="recent-list">
+                            {prevPrompts.map((item, index) => (
+                                <div 
+                                    key={index}
+                                    onClick={() => loadPrompt(item)} 
+                                    className="recent-item"
+                                    style={{animationDelay: `${index * 0.1}s`}}
+                                >
+                                    <div className="item-icon">
+                                        <img src={assets.message_icon} alt="Message" />
+                                    </div>
+                                    <p className="item-text">
+                                        {item.length > 25 ? `${item.slice(0, 25)}...` : item}
+                                    </p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
             </div>
-              )
-            })}
-          </div>
-        :null
-          }
-</div>
 
-        <div className="bottom">
-          <div className="bottom-item recent-entry">
-            <img src={assets.question_icon} alt="" />
-            {extended ? <p>Help </p>:null}
-          </div>
+            <div className="bottom">
+                <div className="bottom-actions">
+                    <div className="action-item">
+                        <div className="action-icon">
+                            <img src={assets.question_icon} alt="Help" />
+                        </div>
+                        {extended && <span className="action-text">Help</span>}
+                    </div>
 
-          <div className="bottom-item recent-entry">
-            <img src={assets.history_icon} alt="" />
-            {extended ? <p>Activity</p>: null}
-          </div>
+                    <div className="action-item">
+                        <div className="action-icon">
+                            <img src={assets.history_icon} alt="Activity" />
+                        </div>
+                        {extended && <span className="action-text">Activity</span>}
+                    </div>
 
-          <div className="bottom-item recent-entry">
-            <img src={assets.setting_icon} alt="" />
-            {extended ? <p>Settings</p>: null}
-          </div>
+                    <div className="action-item">
+                        <div className="action-icon">
+                            <img src={assets.setting_icon} alt="Settings" />
+                        </div>
+                        {extended && <span className="action-text">Settings</span>}
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-  );
+    );
 };
 
 export default Sidebar;
